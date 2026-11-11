@@ -1,0 +1,7 @@
+build/
+build1f/
+dist/
+wheels/
+test/
+__pycache__/
+*.log
