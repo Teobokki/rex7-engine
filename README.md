@@ -1,6 +1,6 @@
 # REX 7 ENGINE REAL EX
 
-perchance.org runs in a bundled web engine, so no system browser runtime is needed. The app also includes **REX 7 ELITE**, an image board with optional frame animation.
+perchance.org/ai-photo-generator (start page and Home) runs in a bundled web engine, so no system browser runtime is needed. The app also includes **REX 7 ELITE**, an image board with optional frame animation.
 
 **Engine choice:** a self-contained Chromium-based engine (PySide6 6.7.3 / QtWebEngine) ships inside the app folder. It doesn't use the system WebView2 Evergreen runtime. Profile data (cookies, local storage, cache) is kept in `%LOCALAPPDATA%\REX 7 ENGINE REAL EX`.
 

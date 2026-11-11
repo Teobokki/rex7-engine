@@ -3,11 +3,11 @@
 import json, os, sys, threading, time, urllib.request, re
 
 APP = "REX 7 ENGINE REAL EX"
-APP_VERSION = "1.0.0"
+APP_VERSION = "1.0.1"
 COPYRIGHT = "\u00a92026 EX Inc./HYPERION DIGITAL \u00a92026"
 REPO = "Teobokki/rex7-engine"
 UPDATE_URL = "https://raw.githubusercontent.com/%s/main/latest.json" % REPO
-HOME_URL = "https://perchance.org"
+HOME_URL = "https://perchance.org/ai-photo-generator"
 
 
 def is_wine():
@@ -135,7 +135,7 @@ class Main(QMainWindow):
         self.b_back = nb("\u25c0", "Back (Alt+Left)", self.view.back)
         self.b_fwd = nb("\u25b6", "Forward (Alt+Right)", self.view.forward)
         nb("\u27f3", "Reload (F5)", self.view.reload)
-        nb("\u2302", "Home \u2014 perchance.org", self.home)
+        nb("\u2302", "Home \u2014 perchance.org/ai-photo-generator", self.home)
         self.addr = QLineEdit(); self.addr.setObjectName("addr"); self.addr.returnPressed.connect(self.go); nh.addWidget(self.addr, 1)
         self.title = QLabel(""); self.title.setObjectName("muted"); self.title.setMaximumWidth(320); nh.addWidget(self.title)
         b_imp = QPushButton("\u2b07  Import to board"); b_imp.setObjectName("accent"); b_imp.setToolTip("Capture this page onto the current REX 7 ELITE frame")

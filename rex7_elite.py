@@ -889,6 +889,6 @@ class EliteBoard(QWidget):
             self.export_gif(os.path.join(out, "test.gif")); self.export_mp4(os.path.join(out, "test.mp4"))
             self.export_seq(os.path.join(out, "seq")); self.save_project(os.path.join(out, "test.rex7"))
             self.open_project(os.path.join(out, "test.rex7")); self.goto(3)
-            self.say("Self-test exports OK")
+            self.say("")
         except Exception as ex:
             self.say("Self-test export error: %s" % ex)
