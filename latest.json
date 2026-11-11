@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0",
+  "url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.0/REX-7-ENGINE-REAL-EX-Setup-1.0.0.exe",
+  "installer_url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.0/REX-7-ENGINE-REAL-EX-Setup-1.0.0.exe",
+  "portable_url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.0/REX-7-ENGINE-REAL-EX-Portable-1.0.0.exe",
+  "release_url": "https://github.com/Teobokki/rex7-engine/releases/tag/v1.0.0",
+  "sha256": "1737eb3c2ae4b9034af98f452c12fc84c28e90684cfd94e65f97e67ad1759a68",
+  "size": 131571837,
+  "portable_sha256": "8d7394eaad92201d5f1ce87e8237a2ec390a8be4112cb8284a86c75afed0164e",
+  "portable_size": 191747128,
+  "published": "2026-11-11",
+  "notes": "REX 7 ENGINE REAL EX 1.0.0 \u2014 perchance.org in a bundled engine + REX 7 ELITE image & animation board."
+}
