@@ -1,9 +1,9 @@
-"""REX 7 ENGINE REAL EX - perchance.org in a bundled web engine + REX 7 ELITE image/animation board.
+"""REX 7 ENGINE REAL EX - perchance.org on the system web runtime + REX 7 ELITE image/animation board.
 (c)2026 EX Inc./HYPERION DIGITAL (c)2026"""
 import json, os, sys, threading, time, urllib.request, re
 
 APP = "REX 7 ENGINE REAL EX"
-APP_VERSION = "1.0.1"
+APP_VERSION = "1.0.2"
 COPYRIGHT = "\u00a92026 EX Inc./HYPERION DIGITAL \u00a92026"
 REPO = "Teobokki/rex7-engine"
 UPDATE_URL = "https://raw.githubusercontent.com/%s/main/latest.json" % REPO
@@ -28,20 +28,12 @@ def data_dir():
 
 
 WINE = is_wine()
-_flags = os.environ.get("QTWEBENGINE_CHROMIUM_FLAGS", "")
-if WINE:  # compatibility layer only: the GPU process and sandbox don't work there. Real Windows keeps the defaults.
-    _flags += " --no-sandbox --disable-gpu --disable-gpu-compositing --disable-features=RendererCodeIntegrity"
-os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = _flags.strip()
-if WINE:
-    os.environ.setdefault("QTWEBENGINE_DISABLE_SANDBOX", "1")
-    os.environ.setdefault("QT_OPENGL", "software")
 
 from PySide6.QtCore import Qt, QUrl, QTimer, Signal, QObject, QSize
 from PySide6.QtGui import QIcon, QPixmap, QDesktopServices, QKeySequence, QShortcut, QPainter
 from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel,
                                QLineEdit, QStackedWidget, QSplashScreen, QMessageBox, QProgressBar, QSizePolicy)
-from PySide6.QtWebEngineCore import QWebEngineProfile, QWebEnginePage, QWebEngineSettings
-from PySide6.QtWebEngineWidgets import QWebEngineView
+from rex7_web import WebHost
 
 import rex7_elite as elite
 from rex7_style import (QSS, BG, PANEL, CARD, CARD2, BORDER, TXT, MUT, DIM, ACC, res_path, downloads_dir)
@@ -49,11 +41,6 @@ from rex7_style import (QSS, BG, PANEL, CARD, CARD2, BORDER, TXT, MUT, DIM, ACC,
 
 def vtuple(v):
     return tuple(int(x) for x in re.findall(r"\d+", str(v))[:4]) or (0,)
-
-
-class Page(QWebEnginePage):
-    def createWindow(self, _type):  # pop-ups / target=_blank open in the same view
-        return self
 
 
 class Emblem(QLabel):
@@ -90,20 +77,6 @@ class Main(QMainWindow):
         self.setWindowTitle(APP)
         self.setWindowIcon(QIcon(res_path("assets", "logo.ico")))
         self.resize(1360, 860)
-        self.profile = QWebEngineProfile("REX7ENGINE", self)
-        dd = data_dir()
-        self.profile.setPersistentStoragePath(os.path.join(dd, "WebData"))
-        self.profile.setCachePath(os.path.join(dd, "Cache"))
-        self.profile.setPersistentCookiesPolicy(QWebEngineProfile.ForcePersistentCookies)
-        self.profile.setHttpCacheType(QWebEngineProfile.DiskHttpCache)
-        ua = re.sub(r"\s*QtWebEngine/\S+", "", self.profile.httpUserAgent())
-        self.profile.setHttpUserAgent(ua)
-        self.profile.downloadRequested.connect(self._download)
-        st = self.profile.settings()
-        for a in (QWebEngineSettings.LocalStorageEnabled, QWebEngineSettings.JavascriptCanOpenWindows,
-                  QWebEngineSettings.FullScreenSupportEnabled, QWebEngineSettings.ScrollAnimatorEnabled):
-            st.setAttribute(a, True)
-
         root = QWidget(); root.setObjectName("root"); self.setCentralWidget(root)
         v = QVBoxLayout(root); v.setContentsMargins(0, 0, 0, 0); v.setSpacing(0)
         top = QWidget(); top.setObjectName("topbar"); th = QHBoxLayout(top); th.setContentsMargins(12, 6, 12, 6); th.setSpacing(8)
@@ -126,10 +99,7 @@ class Main(QMainWindow):
         # ---- web page
         web = QWidget(); wv = QVBoxLayout(web); wv.setContentsMargins(0, 0, 0, 0); wv.setSpacing(0)
         nav = QWidget(); nav.setObjectName("navbar"); nh = QHBoxLayout(nav); nh.setContentsMargins(10, 5, 10, 5); nh.setSpacing(6)
-        self.view = QWebEngineView()
-        self.page = Page(self.profile, self.view)
-        self.page.fullScreenRequested.connect(lambda r: (r.accept(), self.showFullScreen() if r.toggleOn() else self.showNormal()))
-        self.view.setPage(self.page)
+        self.view = WebHost(HOME_URL, data_dir())
         def nb(txt, tip, fn):
             b = QPushButton(txt); b.setObjectName("nav"); b.setToolTip(tip); b.clicked.connect(fn); nh.addWidget(b); return b
         self.b_back = nb("\u25c0", "Back (Alt+Left)", self.view.back)
@@ -144,10 +114,13 @@ class Main(QMainWindow):
         self.prog = QProgressBar(); self.prog.setObjectName("thin"); self.prog.setTextVisible(False); self.prog.setFixedHeight(2)
         self.prog.setRange(0, 100); wv.addWidget(self.prog)
         wv.addWidget(self.view, 1)
-        self.view.urlChanged.connect(lambda u: (self.addr.setText(u.toString()), self._navstate()))
+        self.prog.setRange(0, 0); self.prog.setVisible(False)
+        self.view.urlChanged.connect(self.addr.setText)
         self.view.titleChanged.connect(self._title)
-        self.view.loadProgress.connect(lambda p: (self.prog.setValue(p), self.prog.setVisible(p < 100)))
-        self.view.loadFinished.connect(lambda ok: (self.prog.setVisible(False), self._navstate()))
+        self.view.navState.connect(lambda b, f: (self.b_back.setEnabled(b), self.b_fwd.setEnabled(f)))
+        self.view.loading.connect(self.prog.setVisible)
+        self.view.status.connect(lambda t: self.title.setText(t[:60]) if t else None)
+        self.b_back.setEnabled(False); self.b_fwd.setEnabled(False)
         self.stack.addWidget(web)
         # ---- board
         self.board = elite.EliteBoard(self)
@@ -160,12 +133,13 @@ class Main(QMainWindow):
         QShortcut(QKeySequence("Ctrl+L"), self, lambda: (self.show_tab("web"), self.addr.setFocus(), self.addr.selectAll()))
         self.upd = Updater(); self.upd.found.connect(self._upd_found)
         self.show_tab("web")
-        self.home()
+        self.addr.setText(HOME_URL)
+        QTimer.singleShot(0, self.view.start)
         threading.Thread(target=self._bg_update, args=(False,), daemon=True).start()
 
     # ---- web
     def home(self):
-        self.view.setUrl(QUrl(HOME_URL))
+        self.view.navigate(HOME_URL)
 
     def go(self):
         t = self.addr.text().strip()
@@ -173,25 +147,19 @@ class Main(QMainWindow):
             return
         if not re.match(r"^https?://", t, re.I):
             t = "https://" + t
-        self.view.setUrl(QUrl(t))
+        self.view.navigate(t)
 
     def _title(self, t):
         self.title.setText(t[:60])
         self.setWindowTitle((t + " \u2014 " if t else "") + APP)
 
-    def _navstate(self):
-        h = self.view.history()
-        self.b_back.setEnabled(h.canGoBack()); self.b_fwd.setEnabled(h.canGoForward())
-
-    def _download(self, item):
-        item.setDownloadDirectory(downloads_dir())
-        item.accept()
-        self.title.setText("Saving to Downloads: " + item.downloadFileName())
-
     def import_to_board(self):
-        img = self.view.grab().toImage()
-        self.board.import_image(img, "Web capture")
-        self.show_tab("elite")
+        def got(img):
+            if img is None:
+                self.title.setText("Import needs the web page to be open"); return
+            self.board.import_image(img, "Web capture")
+            self.show_tab("elite")
+        self.view.capture(got)
 
     # ---- shell
     def show_tab(self, key):
@@ -208,7 +176,7 @@ class Main(QMainWindow):
         m.setWindowTitle("About " + APP)
         m.setIconPixmap(QPixmap(res_path("assets", "emblem@2x.png")).scaledToHeight(64, Qt.SmoothTransformation))
         m.setText("<b>%s</b> &nbsp; v%s" % (APP, APP_VERSION))
-        m.setInformativeText("REX ENGINE with its own bundled web engine (no separate runtime needed) and the "
+        m.setInformativeText("REX ENGINE on the system web runtime, with the "
                              "REX 7 ELITE image &amp; animation board.\n\n" + COPYRIGHT)
         m.exec()
 
@@ -248,20 +216,21 @@ def selftest(win, out):
     win.resize(1600, 900)
     L("wine", WINE, "flags", os.environ.get("QTWEBENGINE_CHROMIUM_FLAGS"))
     state = {"loaded": False}
-    win.view.loadFinished.connect(lambda ok: (L("loadFinished", ok, win.view.url().toString()), state.__setitem__("loaded", ok)))
+    win.view.urlChanged.connect(lambda u: L("url", u))
+    win.view.status.connect(lambda t: L("status", t))
     steps = []
     def shot(name):
         win.grab().save(os.path.join(out, name)); L("shot", name)
     def s1():
         shot("web.png"); win.import_to_board()
     def s2():
-        win.board.selftest_fill(); shot("elite_board.png")
+        win.show_tab("elite"); win.board.selftest_fill(); shot("elite_board.png")
     def s3():
         win.board.selftest_anim(out); shot("elite_animation.png")
     def s4():
-        win.show_tab("web"); shot("web2.png"); L("done"); log.close(); QApplication.quit()
+        win.show_tab("web"); shot("web2.png"); L("ready", win.view.ready(), "error", win.view.error); L("done"); log.close(); QApplication.quit()
     t = 0
-    for dt, fn in ((25000, s1), (3000, s2), (4000, s3), (6000, s4)):
+    for dt, fn in ((int(os.environ.get('REX7_WAIT', '12000')), s1), (3000, s2), (4000, s3), (6000, s4)):
         t += dt; QTimer.singleShot(t, fn)
 
 
@@ -283,6 +252,7 @@ def main():
     QTimer.singleShot(1400, reveal)
     if "--selftest" in sys.argv:
         selftest(win, sys.argv[sys.argv.index("--selftest") + 1])
+    app.aboutToQuit.connect(win.view.close_runtime)
     sys.exit(app.exec())
 
 
