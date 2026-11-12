@@ -1,13 +1,13 @@
 {
-  "version": "1.0.1",
-  "url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.1/REX-7-ENGINE-REAL-EX-Setup-1.0.1.exe",
-  "installer_url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.1/REX-7-ENGINE-REAL-EX-Setup-1.0.1.exe",
-  "portable_url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.1/REX-7-ENGINE-REAL-EX-Portable-1.0.1.exe",
-  "release_url": "https://github.com/Teobokki/rex7-engine/releases/tag/v1.0.1",
-  "sha256": "566f92acaf64d520f746e802be03e629f6be590cda57a61dbc4c225d8a70c4c9",
-  "size": 131575100,
-  "portable_sha256": "c9fe39b8a3969d9b462fb687597e50b2e297fc147a5a04c1c07da31ff0d03011",
-  "portable_size": 191748952,
-  "published": "2026-11-11",
-  "notes": "REX 7 ENGINE REAL EX 1.0.1 \u2014 Opens on perchance.org/ai-photo-generator (start page and Home)."
+  "version": "1.0.2",
+  "url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.2/REX-7-ENGINE-REAL-EX-Setup-1.0.2.exe",
+  "installer_url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.2/REX-7-ENGINE-REAL-EX-Setup-1.0.2.exe",
+  "portable_url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.2/REX-7-ENGINE-REAL-EX-Portable-1.0.2.exe",
+  "release_url": "https://github.com/Teobokki/rex7-engine/releases/tag/v1.0.2",
+  "sha256": "ef1b25baa8e3cc29d046e8f52affe9e7bc994f6a9daf08e533887c029173d49e",
+  "size": 60687973,
+  "portable_sha256": "b0092a5dc2d92c0063323234ead96f1099d3d0066a2cb5a25be833a4777cc788",
+  "portable_size": 85189182,
+  "published": "2026-11-12",
+  "notes": "REX 7 ENGINE REAL EX 1.0.2 \u2014 Uses the system web runtime: much smaller download; Setup installs the runtime if missing."
 }
