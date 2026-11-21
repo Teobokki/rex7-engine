@@ -1,4 +1,4 @@
-#define MyVer "1.0.3"
+#define MyVer "1.0.4"
 #define MyApp "REX 7 ENGINE REAL EX"
 [Setup]
 AppId={{5B7E2C41-7A0D-4F3E-9C2B-9D4A6B2E81F3}

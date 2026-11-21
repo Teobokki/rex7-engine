@@ -38,12 +38,12 @@ QMainWindow, #root, QStackedWidget, QDialog, QMessageBox { background: %(BG)s; }
 #hline { background: %(BORDER)s; }
 #navbar, #tools, #timeline { background: %(PANEL)s; }
 #apptitle { font-size: 13pt; font-weight: 700; letter-spacing: 1px; }
-QPushButton#brandlink { background: transparent; border: none; border-bottom: 2px solid transparent;
-                        border-radius: 0; font-size: 13pt; font-weight: 700; letter-spacing: 1px;
-                        padding: 4px 6px; color: %(TXT)s; }
-QPushButton#brandlink:hover { color: %(SILVER2)s; }
-QPushButton#brandlink:checked { border-bottom: 2px solid %(ACC)s; }
-QPushButton#brandlink:pressed { background: transparent; }
+QPushButton#brandlink { background: #1d2a2f; border: 1px solid #3f5a61; border-radius: 6px;
+                        font-size: 13pt; font-weight: 700; letter-spacing: 1px;
+                        padding: 4px 13px; margin-right: 2px; color: %(SILVER2)s; }
+QPushButton#brandlink:hover { background: #24383f; border: 1px solid %(ACC)s; color: %(TXT)s; }
+QPushButton#brandlink:checked { background: #26404a; border: 1px solid %(ACC)s; color: %(ACC)s; }
+QPushButton#brandlink:pressed { background: #26404a; }
 #muted { color: %(MUT)s; }
 #dim { color: %(DIM)s; font-size: 8pt; font-weight: 700; }
 #foot { background: %(PANEL)s; color: %(DIM)s; font-size: 8pt; padding: 3px; }

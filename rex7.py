@@ -3,7 +3,7 @@
 import json, os, sys, threading, time, urllib.request, re
 
 APP = "REX 7 ENGINE REAL EX"
-APP_VERSION = "1.0.3"
+APP_VERSION = "1.0.4"
 COPYRIGHT = "\u00a92026 EX Inc./HYPERION DIGITAL \u00a92026"
 REPO = "Teobokki/rex7-engine"
 UPDATE_URL = "https://raw.githubusercontent.com/%s/main/latest.json" % REPO
