@@ -1,13 +1,13 @@
 {
-  "version": "1.0.2",
-  "url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.2/REX-7-ENGINE-REAL-EX-Setup-1.0.2.exe",
-  "installer_url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.2/REX-7-ENGINE-REAL-EX-Setup-1.0.2.exe",
-  "portable_url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.2/REX-7-ENGINE-REAL-EX-Portable-1.0.2.exe",
-  "release_url": "https://github.com/Teobokki/rex7-engine/releases/tag/v1.0.2",
-  "sha256": "ef1b25baa8e3cc29d046e8f52affe9e7bc994f6a9daf08e533887c029173d49e",
-  "size": 60687973,
-  "portable_sha256": "b0092a5dc2d92c0063323234ead96f1099d3d0066a2cb5a25be833a4777cc788",
-  "portable_size": 85189182,
-  "published": "2026-11-12",
-  "notes": "REX 7 ENGINE REAL EX 1.0.2 \u2014 Uses the system web runtime: much smaller download; Setup installs the runtime if missing."
+  "version": "1.0.3",
+  "url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.3/REX-7-ENGINE-REAL-EX-Setup-1.0.3.exe",
+  "installer_url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.3/REX-7-ENGINE-REAL-EX-Setup-1.0.3.exe",
+  "portable_url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.3/REX-7-ENGINE-REAL-EX-Portable-1.0.3.exe",
+  "release_url": "https://github.com/Teobokki/rex7-engine/releases/tag/v1.0.3",
+  "sha256": "b07564fd4334d8731f06d0eebbe57b1fbd5b6b129ca48c9c7d8936f47f5f0b31",
+  "size": 60689852,
+  "portable_sha256": "18bd9586ef2e503a0fad1dd66315767bebae44f4a68ce8e875d30f1ec12cbcc0",
+  "portable_size": 85190159,
+  "published": "2026-11-21",
+  "notes": "REX 7 ENGINE REAL EX 1.0.3 — New top-bar links: REX 7 and REX HYPERION."
 }
