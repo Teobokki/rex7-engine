@@ -3,11 +3,12 @@
 import json, os, sys, threading, time, urllib.request, re
 
 APP = "REX 7 ENGINE REAL EX"
-APP_VERSION = "1.0.2"
+APP_VERSION = "1.0.3"
 COPYRIGHT = "\u00a92026 EX Inc./HYPERION DIGITAL \u00a92026"
 REPO = "Teobokki/rex7-engine"
 UPDATE_URL = "https://raw.githubusercontent.com/%s/main/latest.json" % REPO
 HOME_URL = "https://perchance.org/ai-photo-generator"
+PREMIUM_URL = "https://perchance.org/qdlugyspr9"
 
 
 def is_wine():
@@ -81,7 +82,15 @@ class Main(QMainWindow):
         v = QVBoxLayout(root); v.setContentsMargins(0, 0, 0, 0); v.setSpacing(0)
         top = QWidget(); top.setObjectName("topbar"); th = QHBoxLayout(top); th.setContentsMargins(12, 6, 12, 6); th.setSpacing(8)
         self.emblem = Emblem(42); self.emblem.clicked.connect(self.about); th.addWidget(self.emblem)
-        t = QLabel(APP); t.setObjectName("apptitle"); th.addWidget(t)
+        self.brand = {}
+        for key, label, url, tip in (
+            ("rex", "REX 7", HOME_URL, "Open the REX 7 start page"),
+            ("hyperion", "REX HYPERION", PREMIUM_URL, "Open REX HYPERION"),
+        ):
+            b = QPushButton(label); b.setObjectName("brandlink"); b.setCursor(Qt.PointingHandCursor)
+            b.setCheckable(True); b.setToolTip(tip)
+            b.clicked.connect(lambda _=False, u=url: self.open_brand(u))
+            th.addWidget(b); self.brand[key] = b
         vl = QLabel("v" + APP_VERSION); vl.setObjectName("muted"); th.addWidget(vl)
         th.addSpacing(18)
         self.tabs = {}
@@ -116,7 +125,9 @@ class Main(QMainWindow):
         wv.addWidget(self.view, 1)
         self.prog.setRange(0, 0); self.prog.setVisible(False)
         self.view.urlChanged.connect(self.addr.setText)
+        self.view.urlChanged.connect(self._sync_brand)
         self.view.titleChanged.connect(self._title)
+        self._sync_brand(HOME_URL)
         self.view.navState.connect(lambda b, f: (self.b_back.setEnabled(b), self.b_fwd.setEnabled(f)))
         self.view.loading.connect(self.prog.setVisible)
         self.view.status.connect(lambda t: self.title.setText(t[:60]) if t else None)
@@ -138,8 +149,19 @@ class Main(QMainWindow):
         threading.Thread(target=self._bg_update, args=(False,), daemon=True).start()
 
     # ---- web
+    def open_brand(self, url):
+        self.show_tab("web")
+        self.view.navigate(url)
+        self._sync_brand(url)
+
+    def _sync_brand(self, url=""):
+        u = (url or (self.addr.text() if hasattr(self, "addr") else "") or "").lower()
+        self.brand["hyperion"].setChecked("qdlugyspr9" in u)
+        self.brand["rex"].setChecked("ai-photo-generator" in u)
+
     def home(self):
         self.view.navigate(HOME_URL)
+        self._sync_brand(HOME_URL)
 
     def go(self):
         t = self.addr.text().strip()
