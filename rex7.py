@@ -3,7 +3,7 @@
 import json, os, sys, threading, time, urllib.request, re
 
 APP = "REX 7 ENGINE REAL EX"
-APP_VERSION = "1.0.5"
+APP_VERSION = "1.0.6"
 COPYRIGHT = "\u00a92026 EX Inc./HYPERION DIGITAL \u00a92026"
 REPO = "Teobokki/rex7-engine"
 UPDATE_URL = "https://raw.githubusercontent.com/%s/main/latest.json" % REPO
@@ -94,6 +94,12 @@ class Main(QMainWindow):
         cg = QLabel("CHAT IMAGE GEN  /image <description>"); cg.setObjectName("cmdlabel"); cg.setTextFormat(Qt.PlainText)
         cg.setTextInteractionFlags(Qt.TextSelectableByMouse); cg.setToolTip("CHAT IMAGE GEN: type /image <description> in chat")
         th.addWidget(cg)
+        bcp = QPushButton("\u29c9  Copy"); bcp.setObjectName("cmdcopy"); bcp.setCursor(Qt.PointingHandCursor)
+        bcp.setToolTip("Copy /image <description> to the clipboard")
+        def _copy_cmd(_=False, b=bcp):
+            QApplication.clipboard().setText("/image <description>"); b.setText("\u2713  Copied")
+            QTimer.singleShot(1500, lambda: b.setText("\u29c9  Copy"))
+        bcp.clicked.connect(_copy_cmd); th.addWidget(bcp)
         vl = QLabel("v" + APP_VERSION); vl.setObjectName("muted"); th.addWidget(vl)
         th.addSpacing(18)
         self.tabs = {}

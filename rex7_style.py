@@ -46,6 +46,10 @@ QPushButton#brandlink:checked { background: #26404a; border: 1px solid %(ACC)s; 
 QPushButton#brandlink:pressed { background: #26404a; }
 QLabel#cmdlabel { background: #26404a; border: 1px solid %(ACC)s; border-radius: 6px;
                   font-size: 11pt; font-weight: 700; letter-spacing: 1px; padding: 4px 12px; color: %(ACC)s; }
+QPushButton#cmdcopy { background: %(ACC)s; border: 1px solid %(ACC)s; border-radius: 6px; font-size: 10pt; font-weight: 700;
+                      padding: 4px 12px; color: #10262c; }
+QPushButton#cmdcopy:hover { background: #a6e7f2; }
+QPushButton#cmdcopy:pressed { background: #5fc3d6; }
 #muted { color: %(MUT)s; }
 #dim { color: %(DIM)s; font-size: 8pt; font-weight: 700; }
 #foot { background: %(PANEL)s; color: %(DIM)s; font-size: 8pt; padding: 3px; }
