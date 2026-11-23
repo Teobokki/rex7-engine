@@ -3,7 +3,7 @@
 import json, os, sys, threading, time, urllib.request, re
 
 APP = "REX 7 ENGINE REAL EX"
-APP_VERSION = "1.0.4"
+APP_VERSION = "1.0.5"
 COPYRIGHT = "\u00a92026 EX Inc./HYPERION DIGITAL \u00a92026"
 REPO = "Teobokki/rex7-engine"
 UPDATE_URL = "https://raw.githubusercontent.com/%s/main/latest.json" % REPO
@@ -91,6 +91,9 @@ class Main(QMainWindow):
             b.setCheckable(True); b.setToolTip(tip)
             b.clicked.connect(lambda _=False, u=url: self.open_brand(u))
             th.addWidget(b); self.brand[key] = b
+        cg = QLabel("CHAT IMAGE GEN  /image <description>"); cg.setObjectName("cmdlabel"); cg.setTextFormat(Qt.PlainText)
+        cg.setTextInteractionFlags(Qt.TextSelectableByMouse); cg.setToolTip("CHAT IMAGE GEN: type /image <description> in chat")
+        th.addWidget(cg)
         vl = QLabel("v" + APP_VERSION); vl.setObjectName("muted"); th.addWidget(vl)
         th.addSpacing(18)
         self.tabs = {}
