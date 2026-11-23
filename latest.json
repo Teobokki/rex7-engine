@@ -1,13 +1,13 @@
 {
-  "version": "1.0.5",
-  "url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.5/REX-7-ENGINE-REAL-EX-Setup-1.0.5.exe",
-  "installer_url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.5/REX-7-ENGINE-REAL-EX-Setup-1.0.5.exe",
-  "portable_url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.5/REX-7-ENGINE-REAL-EX-Portable-1.0.5.exe",
-  "release_url": "https://github.com/Teobokki/rex7-engine/releases/tag/v1.0.5",
-  "sha256": "e09c26f7decf04ed6088e9c8d5f8cded7ddf97621945af3755501b16d597ed54",
-  "size": 60688781,
-  "portable_sha256": "cc4af46dc2fe269f6c18acbe30a2e3c7aea10218eb6cc579e0da799f0e49528e",
-  "portable_size": 85189799,
-  "published": "2026-11-23T15:02:27Z",
-  "notes": "Highlighted CHAT IMAGE GEN  /image <description> label in the top bar."
+  "version": "1.0.6",
+  "url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.6/REX-7-ENGINE-REAL-EX-Setup-1.0.6.exe",
+  "installer_url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.6/REX-7-ENGINE-REAL-EX-Setup-1.0.6.exe",
+  "portable_url": "https://github.com/Teobokki/rex7-engine/releases/download/v1.0.6/REX-7-ENGINE-REAL-EX-Portable-1.0.6.exe",
+  "release_url": "https://github.com/Teobokki/rex7-engine/releases/tag/v1.0.6",
+  "sha256": "be39a95ec373de4733c298cece2f804e311c631650517afb82dab8941a00d276",
+  "size": 60689087,
+  "portable_sha256": "bdc5d33bfef0285b3001a6accc394f3ca0495c6f381d8e31cf63d82ae871e419",
+  "portable_size": 85191581,
+  "published": "2026-11-23T16:15:07Z",
+  "notes": "Copy button next to CHAT IMAGE GEN copies /image <description>."
 }
